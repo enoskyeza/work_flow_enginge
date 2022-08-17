@@ -5,6 +5,9 @@ A pseudo-working workflow engine.
 ### Setup
 - I implemented the question in an interactive python script.
 - It is run by executing main.py
+```python
+python -m main.py
+```
 
 ### Description
 From the introduction that was provided, I was able to formulate functions that I used to design the structure according to the working flow.

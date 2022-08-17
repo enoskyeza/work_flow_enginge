@@ -1,3 +1,5 @@
+from datetime import datetime
+
 #  Sample database
 auto_names = ['Auto', 'Auto1', 'Auto2']
 
@@ -24,7 +26,7 @@ def new_automation():
     if choice.isalpha() and choice in choices:
         if choice == 'a':
             print('Autoresponder automation selected.')
-            auto = Autoresponder(unique_name())
+            auto = Autoresponder(unique_name(), 'Running')
             automations_list.append(auto)
             print('')
             auto_choice = str(input('Enter number; '
@@ -40,7 +42,7 @@ def new_automation():
 
         elif choice == 'e':
             print('Ecommerce & Marketing automation selected.')
-            auto = EcommerceMarketing(unique_name())
+            auto = EcommerceMarketing(unique_name(), 'Running')
             automations_list.append(auto)
             print('')
             auto_choice = str(input('Enter number; '
@@ -64,7 +66,7 @@ def new_automation():
 
         elif choice == 'b':
             print('Follow prompts to create custom automation.')
-            auto = Blank(unique_name())
+            auto = Blank(unique_name(), 'Running')
             automations_list.append(auto)
             print('')
             content()
@@ -81,8 +83,11 @@ def new_automation():
 
 # Automation types
 class Autoresponder:
-    def __init__(self, name):
+
+    def __init__(self, name, status, pub_date=datetime.now()):
         self.name = name
+        self.status = status
+        self.pub_date = pub_date
 
     def welcome_msg(self):
         print('Emails to introduce yourself will be sent to New subscribers')
@@ -92,8 +97,10 @@ class Autoresponder:
 
 
 class EcommerceMarketing:
-    def __init__(self, name):
+    def __init__(self, name, status, pub_date=datetime.now()):
         self.name = name
+        self.status = status
+        self.pub_date = pub_date
 
     def thanking_msg(self):
         print('Thank first time customers')
@@ -109,8 +116,10 @@ class EcommerceMarketing:
 
 
 class Blank:
-    def __init__(self, name):
+    def __init__(self, name, status, pub_date=datetime.now()):
         self.name = name
+        self.status = status
+        self.pub_date = pub_date
 
     def success_msg(self):
         print('Automation started successfully')
@@ -218,12 +227,11 @@ condition_elements = {
     4: checklist_field, 5: check_purchase_status, 6: webinar_status
 }
 
-
 # Dashboard
 
-Auto = Autoresponder('Auto')
-Auto1 = EcommerceMarketing('Auto1')
-Auto2 = Blank('Auto2')
+Auto = Autoresponder('Auto', 'Stopped')
+Auto1 = EcommerceMarketing('Auto1', 'Draft')
+Auto2 = Blank('Auto2', 'Running')
 automations_list.append(Auto)
 automations_list.append(Auto1)
 automations_list.append(Auto2)
@@ -234,8 +242,9 @@ def dashboard():
     print(f'AUTOMATIONS - {len(automations_list)}')
     for automation in automations_list:
         print(f'{automation.name} is running')
-        print(f'    Published:    {"pub_date"}')
+        print(f'    Published:    {automation.pub_date}')
         print(f'    Last_edited:  {"edit_date"}')
+        print(f'    Status:  {automation.status}')
         print('')
 
     pass
